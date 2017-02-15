@@ -10,32 +10,14 @@
     // e aí, template aqui no extend ou na tag template?
     // passar os props todos assim ou mete tudo num vm pai e passa tudo lá?
     var list = Vue.extend({
-        template: '\
-        <div class="col-md-3">\
-            <div class="kanban-list">\
-                <div class="title">{{tasklist.title}}</div>\
-                <dl v-sortable="{group: \'.boxes\', animation: 100}">\
-                    <task  v-for=\'(task, index)  in tasks\' :index=index v-if=\'task.status == tasklist.statusFilter\'  v-on:remove="tasks.splice(index, 1)"  :task=\'task\'></task>\
-                </dl>\
-                <button class="btn btn-info" v-on:click="modalProperties.show = true; modalProperties.statusFilter = tasklist.statusFilter"><i class="fa fa-plus"></i> task</button>\
-            </div>\
-            \
-        </div>',
+        template: '#list-template',
         props: ['tasks', 'tasklist', 'modalProperties', 'showModalEvent'],
         
     })
 
     // bonitão
     var task = Vue.extend({
-        template: '\
-            <div>\
-                <dt>\
-                    {{task.title}} \
-                    <div @click="moveTask" v-if="task.status < 4" class="task-icons"><i  class="fa fa-long-arrow-right"></i></div>\
-                    <div @click="$emit(\'remove\')"  class="task-icons"><i  class="fa fa-trash"></i></div>\
-                </dt>\
-                <dd>{{task.description}}</dd>\
-            </div>',
+        template: '#task-template',
         props: ['task'],
         methods: {
             moveTask: function(){

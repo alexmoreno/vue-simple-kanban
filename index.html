@@ -29,47 +29,10 @@
             </div>
         </div>
     </nav>
-    <script type="text/x-template" id="modal-template">
-      <transition name="modal">
-        <div class="modal-mask">
-          <div class="modal-wrapper">
-            <div class="modal-container">
-
-              <div class="modal-header">
-                <slot name="header">
-                  Add task
-                </slot>
-              </div>
-
-              <div class="modal-body">
-                <slot name="body">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Title</label>
-                    <input v-model='taskToAdd.title' class="form-control" id="exampleInputEmail1" placeholder="Title">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Description</label>
-                    <textarea v-model='taskToAdd.description' class="form-control" id="exampleInputPassword1" placeholder="Description"> </textarea>
-                  </div>
-                </slot>
-              </div>
-
-              <div class="modal-footer">
-                <slot name="footer">
-                  <button class="modal-default-button" @click="addTask">
-                    Add
-                  </button>
-                </slot>
-              </div>
-            </div>
-          </div>
-        </div>
-      </transition>
-    </script>
 
     <section class="container" id='app'>
         <modal v-if="modalProperties.show" :tasks='tasks' :modal-properties='modalProperties' @close="modalProperties.show = false"></modal>
-    
+
         <div class="row">
             <div class="col-sm-12">
                 <h1>My taskboard</h1>
@@ -77,30 +40,87 @@
         </div>
 
         <div class="row">
-        
             <list v-for='tasklist in tasklists' :tasks='tasks' :modal-properties='modalProperties' :tasklist='tasklist'></list>
             
-            
         </div>
-       
+
     </div>
-    </section>
+</section>
+
+<script type="text/x-template" id='list-template'>
+    <div class="col-md-3">
+        <div class="kanban-list">
+            <div class="title">{{tasklist.title}}</div>
+            <dl v-sortable="{group: '.boxes', animation: 100}">
+                <task  v-for='(task, index)  in tasks' :index=index v-if='task.status == tasklist.statusFilter'  v-on:remove="tasks.splice(index, 1)"  :task='task'></task>
+            </dl>
+            <button class="btn btn-info" v-on:click="modalProperties.show = true; modalProperties.statusFilter = tasklist.statusFilter"><i class="fa fa-plus"></i> task</button>
+        </div>
+
+    </div>
+</script>
+<script type="text/x-template" id='task-template'>
+    <div>
+        <dt>
+            {{task.title}} 
+            <div @click="moveTask" v-if="task.status < 4" class="task-icons"><i  class="fa fa-long-arrow-right"></i></div>
+            <div @click="$emit('remove')"  class="task-icons"><i  class="fa fa-trash"></i></div>
+        </dt>
+        <dd>{{task.description}}</dd>
+    </div>  
+</script>
+<script type="text/x-template" id="modal-template">
+    <transition name="modal">
+        <div class="modal-mask">
+            <div class="modal-wrapper">
+                <div class="modal-container">
+
+                    <div class="modal-header">
+                        <slot name="header">
+                            Add task
+                        </slot>
+                    </div>
+
+                    <div class="modal-body">
+                        <slot name="body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Title</label>
+                                <input v-model='taskToAdd.title' class="form-control" id="exampleInputEmail1" placeholder="Title">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Description</label>
+                                <textarea v-model='taskToAdd.description' class="form-control" id="exampleInputPassword1" placeholder="Description"> </textarea>
+                            </div>
+                        </slot>
+                    </div>
+
+                    <div class="modal-footer">
+                        <slot name="footer">
+                            <button class="modal-default-button btn btn-info" @click="addTask">
+                                Add
+                            </button>
+                        </slot>
+                    </div>
+                </div>
+            </div>
+    </div>
+</transition>
+</script>
 
 
-    
-    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
-    <script src="https://rubaxa.github.io/Sortable/Sortable.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.js'></script>
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
+<script src="https://rubaxa.github.io/Sortable/Sortable.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.js'></script>
 
-    <script src="https://unpkg.com/vue-sortable@latest"></script>
+<script src="https://unpkg.com/vue-sortable@latest"></script>
 
-    <script src="js/plugins.js"></script>
-    <script src="js/main.js"></script>
-    <script>
-    
+<script src="js/plugins.js"></script>
+<script src="js/main.js"></script>
+<script>
 
-    </script>
+
+</script>
 
 </body>
 </html>
