@@ -366,6 +366,9 @@ textarea {
     margin-bottom: 15px;
 
 }
+dl{
+    min-height: 10px;
+}
 dl div{
     background-color: #fff;
     margin-bottom: 5px;
