@@ -1,0 +1,106 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Kanbinho</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">    
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">    
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+<body >
+    <nav class="navbar navbar-inverse " role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="ioctren-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Kanbinho</a>
+            </div>
+        </div>
+    </nav>
+    <script type="text/x-template" id="modal-template">
+      <transition name="modal">
+        <div class="modal-mask">
+          <div class="modal-wrapper">
+            <div class="modal-container">
+
+              <div class="modal-header">
+                <slot name="header">
+                  Add task
+                </slot>
+              </div>
+
+              <div class="modal-body">
+                <slot name="body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Title</label>
+                    <input v-model='taskToAdd.title' class="form-control" id="exampleInputEmail1" placeholder="Title">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Description</label>
+                    <textarea v-model='taskToAdd.description' class="form-control" id="exampleInputPassword1" placeholder="Description"> </textarea>
+                  </div>
+                </slot>
+              </div>
+
+              <div class="modal-footer">
+                <slot name="footer">
+                  <button class="modal-default-button" @click="addTask">
+                    Add
+                  </button>
+                </slot>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
+    </script>
+
+    <section class="container" id='app'>
+        <modal v-if="modalProperties.show" :tasks='tasks' :modal-properties='modalProperties' @close="modalProperties.show = false"></modal>
+    
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>My taskboard</h1>
+            </div>
+        </div>
+
+        <div class="row">
+        
+            <list v-for='tasklist in tasklists' :tasks='tasks' :modal-properties='modalProperties' :tasklist='tasklist'></list>
+            
+            
+        </div>
+       
+    </div>
+    </section>
+
+
+    
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
+    <script src="http://rubaxa.github.io/Sortable/Sortable.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.js'></script>
+
+    <script src="https://unpkg.com/vue-sortable@latest"></script>
+
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+    
+
+    </script>
+
+</body>
+</html>
